@@ -1,0 +1,37 @@
+Meters - percents
++Hunger
+	+Feeding
+	-different kinds of food
++Happiness
+	-Play with it (1+ minigame)
+	-Travel
+	-Petting
++Hygene
+	-bath
+	-poop
+-Discipline
+	-scold
+	-scolding prompts
+	-Consequence of low discipline - refusal to do things
+
+Sickness
+-Too much food
+-poor (low) hygene
+-medicine
+
+Life stages
++egg
+	-Different creatures with diff preferences for activities, food
++baby
++child
++teen
++adult
++senior
+
+COD
++Sickness
++Old age
++starvation
++unhappyness (run away)
+
+
