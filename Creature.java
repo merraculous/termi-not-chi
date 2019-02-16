@@ -3,9 +3,24 @@ public class Creature {
     private static Meter dirtyBoi = new Meter();
     private static Meter hunger = new Meter();
     private static int stage = 0;
+    private static String art = Terminotchi.loadFile("egg.txt");
 
     public static void loadNextStage() {
         setStage(getStage() + 1);
+    }
+
+    /**
+     * @return the art
+     */
+    public static String getArt() {
+        return art;
+    }
+
+    /**
+     * @param art the art to set
+     */
+    public static void setArt(String file) {
+        Creature.art = Terminotchi.loadFile(file);
     }
 
     /**
