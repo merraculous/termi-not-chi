@@ -9,9 +9,9 @@ public class Terminotchi{
     static Creature pet = new Creature();
     
     public static void main(String arg[]){
-        System.out.println(loadFile("./ASCII/logo.txt"));
+        System.out.println("\n\n\n\n\n\n\n\n\n" + loadFile("./ASCII/logo.txt"));
         clearTerminal(1);
-        printMeters();
+        printScreen();
     }
     
     public static void clearTerminal(int sleepTime) {
@@ -28,13 +28,21 @@ public class Terminotchi{
         }
     }
 
+    public static void printScreen() {
+        printMeters();
+        printPet();
+    }
+
+    public static void printPet() {
+        System.out.println( pet.getArt() );
+    }
+
     public static void printMeters() {
         String hungryBoi = getMeterASCII(pet.getHunger());
         String happyBoi = getMeterASCII(pet.getHappiness());
         String hygene = getMeterASCII(pet.getDirtyBoi());
-        String text = "HUNGER " + hungryBoi.replace("\n", "") + "     HAPPINESS " + happyBoi.replace("\n", "") + "     DIRTY BOI " + hygene;
+        String text = "\n    HUNGER " + hungryBoi.replace("\n", "") + "     HAPPINESS " + happyBoi.replace("\n", "") + "     DIRTY BOI " + hygene;
         System.out.println(text);
-        
     }
 
     public static String getMeterASCII(Meter m) {
