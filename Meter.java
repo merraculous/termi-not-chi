@@ -1,15 +1,15 @@
 public class Meter{
     int percent = 50;
-    public static void increment(){
-        this.percent += 1;
-    }
-    public static void decrement(){
+    public void decrement(){
         this.percent -= 1;        
     }
-    public static void get(){
+    public int get(){
         return this.percent;
     }
-    public static void set(int val){
-        this.percent = val;
+    public void increment(int val){
+        this.percent += val;
+        if (this.percent > 100) {
+            this.percent = 100;
+        }
     }
 }
