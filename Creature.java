@@ -35,7 +35,7 @@ public class Creature {
      *
      */
      public static boolean isAlive(){
-         if( happiness.get() < 0 || dirtyBoi.get() < 0 || hunger.get() < 0) {
+         if( happiness.get() < 0 || hunger.get() < 0) {
              isAlive = false;
          }
          return isAlive;
@@ -120,7 +120,11 @@ public class Creature {
     }
 
     public static void feed() {
-        hunger.increment(25);
+        if(hunger.get() + 25 <= 100){
+            hunger.increment(25);
+        }else{
+            isSick = true;
+        }
     }
 
     public static void clean() {
