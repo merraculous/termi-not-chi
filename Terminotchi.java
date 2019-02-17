@@ -17,6 +17,7 @@ public class Terminotchi{
         
         int numSeconds = 0;
         int promptSeconds = 0;
+        boolean first = false;
         boolean newStage = false;
         // To make the egg hatch immediately
         int numMinutes = 9000;
@@ -25,6 +26,7 @@ public class Terminotchi{
 
         String[] teenFlav = loadFlavor("./boiTeen.txt");
         String[] genFlav = loadFlavor("./boiGeneral.txt");
+
         
         while(pet.isAlive()) {
             if(newStage) {
@@ -40,11 +42,11 @@ public class Terminotchi{
                 pet.loadNextStage();
                 newStage = true;
                 numMinutes = 0;
-            } else if(pet.isSick() && !medAsked){
+            } else if(pet.isSick() && !medAsked && first){
                 sickness();
-            } else if(pet.isSick() && medAsked){
+            } else if(pet.isSick() && medAsked && first){
                 sickness();
-            } else if (promptSeconds > 5) {
+            } else if (promptSeconds > 5 || !first) {
                 // take input
                 readInput();
                 promptSeconds = 0;
@@ -66,6 +68,7 @@ public class Terminotchi{
             }
             
             catchSickness();
+            first = true;
             
         }
         clearTerminal(1);
