@@ -6,33 +6,44 @@ import java.util.Random;
 
 public class Terminotchi{
     
-    Random rand = new Random();
+    static Random rand = new Random();
     static int SLEEP_TIME = 1;
     static Creature pet = new Creature();
     static boolean medAsked = false;
     
     public static void main(String arg[]){
-        System.out.println("\n\n\n\n\n\n\n\n\n" + loadFile("./ASCII/logo.txt"));
+        clearTerminal(0);
+        System.out.println("\n\n\n\n\n\n\n\n\n" + loadFile("./ASCII/logo.txt") + "\n\n\n\n\n\n\n\n\n" );
+        
         //clearTerminal(1);
         int numSeconds = 0;
+        int promptSeconds = 0;
 
         // To make the egg hatch immediately
         int numMinutes = 9000;
+        clearTerminal(2);
+        printPet();
         
         while(pet.isAlive()) {
             
-            printScreen(2);
+            printScreen(3);
+
             numSeconds += 2;
+            promptSeconds += 2;
 
             // Update stage if it's been 15 minutes
-            if (numMinutes > 15) {
+            if (numMinutes > 10) {
                 pet.loadNextStage();
+
+                
+
                 numMinutes = 0;
             } else if(pet.isSick() && !medAsked){
                 sickness();
-            }else {
+            } else if (promptSeconds > 5) {
                 // take input
                 readInput();
+                promptSeconds = 0;
             }
             
             // Update meters
@@ -44,13 +55,14 @@ public class Terminotchi{
                 numMinutes++;
             }
             
-
+            catchSickness();
             
         }
         clearTerminal(1);
         System.out.println( loadFile("./yourPetDied.txt") );
 
     }
+    
     
     public static void clearTerminal(int sleepTime) {
         holUp(sleepTime);
@@ -64,6 +76,11 @@ public class Terminotchi{
         } catch(InterruptedException e) {
             System.out.println("Error: InterruptedException");
         }
+    }
+
+    public static String loadRandomFile(String dir, int lim) {
+        int n = rand.nextInt(lim);
+        return loadFile(dir + Integer.toString(n) +".txt");
     }
 
     public static void printScreen(int wait) {
@@ -115,23 +132,60 @@ public class Terminotchi{
         System.out.println("Please choose an action: feed, play, clean");
         String input = System.console().readLine();
         switch(input.toLowerCase()){
+            case "":
+                if(pet.isBoiii()) {
+                    System.out.println("you did nothing to care for your boiii");
+                } else {
+                    System.out.println("you did nothing to care for your pet");
+                }
+                break;
             case "feed":
                 pet.feed();
-                System.out.println("you fed your pet");
+                System.out.println(loadRandomFile("./ASCII/food/", 7));
+                if(pet.isBoiii()) {
+                    System.out.println("you feed your boiii");
+                } else {
+                    System.out.println("you fed your pet");
+                }
                 break;
             case "play":
                 pet.play();
-                System.out.println("you played with your pet");
+                if(pet.isBoiii()) {
+                    System.out.println("you played with your boiii");
+                } else {
+                    System.out.println("you played with your pet");
+                }
+                
+                
                 break;
             case "clean":
                 pet.clean();
-                System.out.println("you cleaned your pet");
+                System.out.println("\n\n\n\n\n" + loadFile("./ASCII/soap.txt") + "\n\n\n");
+                if(pet.isBoiii()) {
+                    System.out.println("you cleaned your boiii");
+                } else {
+                    System.out.println("you cleaned your pet");
+                }
                 break;
             case "quit":
                 System.out.println("byee");
+                System.exit(1);
+                break;
+            case "kill":
+                pet.getHunger().set(-1);
+                break;
+
+            case "dream donut":
+                System.out.println("\n\n\n\n\n" + loadFile("./ASCII/donut.txt") + "\n\n\n");
+                System.out.println("Filip gets his dream donut");
                 break;
             default:
-                System.out.println("Please enter a valid option");
+                if(pet.isBoiii()) {
+                    System.out.println("you're too dumb to care for your boiii");
+                } else {
+                    System.out.println("Please enter a valid option");
+                }
+                
                 break;
         }
     }
@@ -150,7 +204,7 @@ public class Terminotchi{
         System.out.println("Would you like to give it medicine? (y/n)");
         String userInput = System.console().readLine();
         if(userInput.equals("y")){
-            printObject("./ASCII/foodMeds/meds.txt");
+            System.out.println(loadRandomFile("./ASCII/meds/", 5));
             System.out.println("You gave your creature medicine. It looks like its doing much better!");
             pet.setSick(false);
             return;
@@ -162,7 +216,22 @@ public class Terminotchi{
 
     public static void catchSickness(){
         if(!pet.isSick()){
-            //int n = rand.nextInt()
+            int n = rand.nextInt(100);
+            // System.out.println(n);
+            if (pet.getDirtyBoi().get() < 100 && n < 5) {
+                pet.setSick(true);
+            }
+            // if (pet.getDirtyBoi().get() > 90 && n <= 1) {
+            //     pet.setSick(true);
+            // } else if (pet.getDirtyBoi().get() > 75 && n <= 1) {
+            //     pet.setSick(true);
+            // } else if (pet.getDirtyBoi().get() > 50 && n <= 1) {
+            //     pet.setSick(true);
+            // } else if (pet.getDirtyBoi().get() > 25 && n <= 2) {
+            //     pet.setSick(true);
+            // } else if (pet.getDirtyBoi().get() > 0 && n <= 4) {
+            //     pet.setSick(true);
+            // }
         }
     }
 

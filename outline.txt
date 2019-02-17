@@ -1,11 +1,8 @@
 Meters - percents
 +Hunger
-	+Feeding
 	-different kinds of food
 +Happiness
-	-Play with it (1+ minigame)
 	-Travel
-	-Petting
 +Hygene
 	-bath
 	-poop

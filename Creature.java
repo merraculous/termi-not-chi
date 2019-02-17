@@ -3,10 +3,11 @@ public class Creature {
     private static Meter dirtyBoi = new Meter();
     private static Meter hunger = new Meter();
     private static int stage = 0;
-    private static String art = Terminotchi.loadFile("./ASCII/stages/0.txt");
+    private static String art = OutputStuff.loadFile("./ASCII/stages/0.txt");
 
     private static boolean isAlive;
     private static boolean isSick;
+    private static boolean boiii = false;
     
     /* Constructor
      *
@@ -22,6 +23,10 @@ public class Creature {
 
     public static boolean isSick(){
         return isSick;
+    }
+
+    public static boolean isBoiii(){
+        return boiii;
     }
 
     /*
@@ -42,10 +47,18 @@ public class Creature {
      }
 
     public static void loadNextStage() {
-        if(stage < 4) {
+        if(stage < 5) {
+            if (stage > 1) {
+                boiii = true;
+            }
             stage += 1;
+            Terminotchi.clearTerminal(0);
+            System.out.println( Terminotchi.loadFile("./ASCII/stageMessages/" + Integer.toString(stage) + ".txt") );
+            setArt("./ASCII/stages/" + Integer.toString(stage) + ".txt");
+        } else {
+            hunger.set(-1);
         }
-        setArt("./ASCII/stages/" + Integer.toString(stage) + ".txt");
+        
     }
 
     /**
@@ -59,7 +72,7 @@ public class Creature {
      * @param art the art to set
      */
     public static void setArt(String file) {
-        Creature.art = Terminotchi.loadFile(file);
+        Creature.art = OutputStuff.loadFile(file);
     }
 
     /**
@@ -122,8 +135,9 @@ public class Creature {
     public static void feed() {
         if(hunger.get() + 25 <= 100){
             hunger.increment(25);
-        }else{
+        } else {
             isSick = true;
+            hunger.set(100);
         }
     }
 
