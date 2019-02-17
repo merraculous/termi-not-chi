@@ -5,7 +5,7 @@ public class Creature {
     private static Meter dirtyBoi = new Meter();
     private static Meter hunger = new Meter();
     private static int stage = 0;
-    private static String art = OutputStuff.loadFile("./ASCII/stages/0.txt");
+    private static String art = Terminotchi.loadFile("./ASCII/stages/0.txt");
 
     private static boolean isAlive;
     private static boolean isSick;
@@ -77,7 +77,7 @@ public class Creature {
      * @param art the art to set
      */
     public static void setArt(String file) {
-        Creature.art = OutputStuff.loadFile(file);
+        Creature.art = Terminotchi.loadFile(file);
     }
 
     /**
