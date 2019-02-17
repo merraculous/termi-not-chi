@@ -13,12 +13,13 @@ public class Creature {
      */
     public Creature(){
         this.isAlive = true;
-        this.isSick = true;
+        this.isSick = false;
     }
 
     /*
      * returns indication  if creature is sick
      */
+
     public static boolean isSick(){
         return isSick;
     }
@@ -30,9 +31,6 @@ public class Creature {
         isSick = b;
     }
 
-   
-
-
     /* returns idication if creature is alive
      *
      */
@@ -42,7 +40,6 @@ public class Creature {
          }
          return isAlive;
      }
-
 
     public static void loadNextStage() {
         if(stage < 4) {
