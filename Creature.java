@@ -5,8 +5,8 @@ public class Creature {
     private static int stage = 0;
     private static String art = Terminotchi.loadFile("./ASCII/stages/0.txt");
 
-    private boolean isAlive;
-    private boolean isSick;
+    private static boolean isAlive;
+    private static boolean isSick;
     
     /* Constructor
      *
@@ -19,14 +19,22 @@ public class Creature {
     /*
      * returns indication  if creature is sick
      */
-    public boolean isSick(){
+
+    public static boolean isSick(){
         return isSick;
+    }
+
+    /*
+     * returns indication  if creature is sick
+     */
+    public static void setSick(boolean b){
+        isSick = b;
     }
 
     /* returns idication if creature is alive
      *
      */
-     public boolean isAlive(){
+     public static boolean isAlive(){
          if( happiness.get() < 0 || dirtyBoi.get() < 0 || hunger.get() < 0) {
              isAlive = false;
          }
