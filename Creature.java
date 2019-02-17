@@ -11,7 +11,7 @@ public class Creature {
     private static boolean isSick;
     private static boolean boiii = false;
     private static Random rand = new Random();
-    private static int n = rand.nextInt(6);
+    private static int n = rand.nextInt(9);
     private static String dir = "./ASCII/stages/"+ Integer.toString(n) + "/";
     
     /* Constructor
@@ -77,7 +77,7 @@ public class Creature {
      * @param art the art to set
      */
     public static void setArt(String file) {
-        Creature.art = OutputStuff.loadFile(file);
+        Creature.art = Terminotchi.loadFile(file);
     }
 
     /**
