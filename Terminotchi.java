@@ -1,12 +1,15 @@
 import java.util.concurrent.TimeUnit;
 import java.io.*;
 import java.lang.*;
+import java.util.Random;
 
 
 public class Terminotchi{
     
+    Random rand = new Random();
     static int SLEEP_TIME = 1;
     static Creature pet = new Creature();
+    static boolean medAsked = false;
     
     public static void main(String arg[]){
         System.out.println("\n\n\n\n\n\n\n\n\n" + loadFile("./ASCII/logo.txt"));
@@ -25,7 +28,9 @@ public class Terminotchi{
             if (numMinutes > 15) {
                 pet.loadNextStage();
                 numMinutes = 0;
-            } else {
+            } else if(pet.isSick() && !medAsked){
+                sickness();
+            }else {
                 // take input
                 readInput();
             }
@@ -140,7 +145,7 @@ public class Terminotchi{
     }
 
     public static void sickness(){
-        pet.setSick(true);
+        medAsked = true;
         System.out.println("Oh no! Your creature is sick!");
         System.out.println("Would you like to give it medicine? (y/n)");
         String userInput = System.console().readLine();
@@ -152,6 +157,12 @@ public class Terminotchi{
         }
         else{
             System.out.println("You decided not to give your creature medicine.");
+        }
+    }
+
+    public static void catchSickness(){
+        if(!pet.isSick()){
+            //int n = rand.nextInt()
         }
     }
 
