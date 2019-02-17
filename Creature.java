@@ -3,10 +3,41 @@ public class Creature {
     private static Meter dirtyBoi = new Meter();
     private static Meter hunger = new Meter();
     private static int stage = 0;
-    private static String art = Terminotchi.loadFile("egg.txt");
+    private static String art = Terminotchi.loadFile("./ASCII/stages/0.txt");
+
+    private boolean isAlive;
+    private boolean isSick;
+    
+    /* Constructor
+     *
+     */
+    public Creature(){
+        this.isAlive = true;
+        this.isSick = false;
+    }
+
+    /*
+     * returns indication  if creature is sick
+     */
+    public boolean isSick(){
+        return isSick;
+    }
+
+    /* returns idication if creature is alive
+     *
+     */
+     public boolean isAlive(){
+         if( happiness.get() < 0 || dirtyBoi.get() < 0 || hunger.get() < 0) {
+             isAlive = false;
+         }
+         return isAlive;
+     }
 
     public static void loadNextStage() {
-        setStage(getStage() + 1);
+        if(stage < 4) {
+            stage += 1;
+        }
+        setArt("./ASCII/stages/" + Integer.toString(stage) + ".txt");
     }
 
     /**
@@ -35,6 +66,7 @@ public class Creature {
      */
     public static void setStage(int stage) {
         Creature.stage = stage;
+        setArt("./ASCII/stages/" + Integer.toString(stage) + ".txt");
     }
 
     /**
@@ -89,6 +121,7 @@ public class Creature {
 
     public static void play() {
         happiness.increment(25);
+        dirtyBoi.increment(-10);
     }
 
 

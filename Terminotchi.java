@@ -10,7 +10,38 @@ public class Terminotchi{
     
     public static void main(String arg[]){
         System.out.println("\n\n\n\n\n\n\n\n\n" + loadFile("./ASCII/logo.txt"));
+        //clearTerminal(1);
+        int numSeconds = 0;
+
+        // To make the egg hatch immediately
+        int numMinutes = 9000;
+        
+        while(pet.isAlive()) {
+            
+            printScreen(2);
+            numSeconds += 2;
+
+            // Update stage if it's been 15 minutes
+            if (numMinutes > 15) {
+                pet.loadNextStage();
+                numMinutes = 0;
+            }
+            
+            // Update meters
+            if(numSeconds > 1) {
+                pet.getDirtyBoi().decrement();
+                pet.getHappiness().decrement();
+                pet.getHunger().decrement();
+                numSeconds = 0;
+                numMinutes++;
+            }
+            
+            // take input
+            
+        }
         clearTerminal(1);
+        System.out.println( loadFile("./yourPetDied.txt") );
+
         printScreen();
         readInput();
     }
@@ -29,7 +60,8 @@ public class Terminotchi{
         }
     }
 
-    public static void printScreen() {
+    public static void printScreen(int wait) {
+        clearTerminal(wait);
         printMeters();
         printPet();
     }
@@ -39,10 +71,14 @@ public class Terminotchi{
     }
 
     public static void printMeters() {
+        String hungy = Integer.toString(pet.getHunger().get());
+        String happ = Integer.toString(pet.getHappiness().get());
+        String db = Integer.toString(pet.getDirtyBoi().get());
+
         String hungryBoi = getMeterASCII(pet.getHunger());
         String happyBoi = getMeterASCII(pet.getHappiness());
         String hygene = getMeterASCII(pet.getDirtyBoi());
-        String text = "\n    HUNGER " + hungryBoi.replace("\n", "") + "     HAPPINESS " + happyBoi.replace("\n", "") + "     DIRTY BOI " + hygene;
+        String text = "\n    HUNGER " + hungryBoi.replace("\n", " ") + hungy + "%     HAPPINESS " + happyBoi.replace("\n", " ") + happ + "%     DIRTY BOI " + hygene.replace("\n", " ") +" " + hungy + "%\n\n";
         System.out.println(text);
     }
 
