@@ -25,6 +25,9 @@ public class Terminotchi{
             if (numMinutes > 15) {
                 pet.loadNextStage();
                 numMinutes = 0;
+            } else {
+                // take input
+                readInput();
             }
             
             // Update meters
@@ -36,15 +39,12 @@ public class Terminotchi{
                 numMinutes++;
             }
             
-            // take input
+
             
         }
         clearTerminal(1);
         System.out.println( loadFile("./yourPetDied.txt") );
 
-        printScreen();
-        sickness();
-        readInput();
     }
     
     public static void clearTerminal(int sleepTime) {
@@ -79,7 +79,7 @@ public class Terminotchi{
         String hungryBoi = getMeterASCII(pet.getHunger());
         String happyBoi = getMeterASCII(pet.getHappiness());
         String hygene = getMeterASCII(pet.getDirtyBoi());
-        String text = "\n    HUNGER " + hungryBoi.replace("\n", " ") + hungy + "%     HAPPINESS " + happyBoi.replace("\n", " ") + happ + "%     DIRTY BOI " + hygene.replace("\n", " ") +" " + hungy + "%\n\n";
+        String text = "\n    HUNGER " + hungryBoi.replace("\n", " ") + hungy + "%     HAPPINESS " + happyBoi.replace("\n", " ") + happ + "%     DIRTY BOI " + hygene.replace("\n", " ") +" " + db + "%\n\n";
         System.out.println(text);
     }
 
@@ -111,15 +111,15 @@ public class Terminotchi{
         String input = System.console().readLine();
         switch(input.toLowerCase()){
             case "feed":
-                //Call feed function
+                pet.feed();
                 System.out.println("you fed your pet");
                 break;
             case "play":
-                //Call play function
+                pet.play();
                 System.out.println("you played with your pet");
                 break;
             case "clean":
-                //Call clean function
+                pet.clean();
                 System.out.println("you cleaned your pet");
                 break;
             case "quit":
