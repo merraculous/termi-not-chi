@@ -12,6 +12,7 @@ public class Terminotchi{
         System.out.println("\n\n\n\n\n\n\n\n\n" + loadFile("./ASCII/logo.txt"));
         clearTerminal(1);
         printScreen();
+        sickness();
         readInput();
     }
     
@@ -92,9 +93,30 @@ public class Terminotchi{
                 System.out.println("Please enter a valid option");
                 break;
         }
-        
-        
+    }
 
+
+
+
+    public static void printObject(String file){
+        String loadedFile = loadFile(file);
+        System.out.println(loadedFile);
+    }
+
+    public static void sickness(){
+        pet.setSick(true);
+        System.out.println("Oh no! Your creature is sick!");
+        System.out.println("Would you like to give it medicine? (y/n)");
+        String userInput = System.console().readLine();
+        if(userInput.equals("y")){
+            printObject("./ASCII/foodMeds/meds.txt");
+            System.out.println("You gave your creature medicine. It looks like its doing much better!");
+            pet.setSick(false);
+            return;
+        }
+        else{
+            System.out.println("You decided not to give your creature medicine.");
+        }
     }
 
 }
