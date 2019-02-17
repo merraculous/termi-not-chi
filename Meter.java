@@ -1,5 +1,5 @@
 public class Meter{
-    int percent = 50;
+    int percent = 100;
     public void decrement(){
         this.percent -= 1;        
     }

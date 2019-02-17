@@ -15,7 +15,6 @@ public class Terminotchi{
         clearTerminal(0);
         System.out.println("\n\n\n\n\n\n\n\n\n" + loadFile("./ASCII/logo.txt") + "\n\n\n\n\n\n\n\n\n" );
         
-        //clearTerminal(1);
         int numSeconds = 0;
         int promptSeconds = 0;
 
@@ -23,6 +22,9 @@ public class Terminotchi{
         int numMinutes = 9000;
         clearTerminal(2);
         printPet();
+
+        String[] teenFlav = loadFlavor("./boiTeen.txt");
+        String[] genFlav = loadFlavor("./boiGeneral.txt");
         
         while(pet.isAlive()) {
             
@@ -32,18 +34,24 @@ public class Terminotchi{
             promptSeconds += 2;
 
             // Update stage if it's been 15 minutes
-            if (numMinutes > 10) {
+            if (numMinutes > 2) {
                 pet.loadNextStage();
-
-                
 
                 numMinutes = 0;
             } else if(pet.isSick() && !medAsked){
+                sickness();
+            } else if(pet.isSick() && medAsked){
                 sickness();
             } else if (promptSeconds > 5) {
                 // take input
                 readInput();
                 promptSeconds = 0;
+            } else if (pet.getStage() == 3) {
+                int n = rand.nextInt(teenFlav.length);
+                System.out.println(teenFlav[n]);
+            } else if (pet.getStage() > 1){
+                int n = rand.nextInt(genFlav.length);
+                System.out.println(genFlav[n]);
             }
             
             // Update meters
@@ -61,6 +69,10 @@ public class Terminotchi{
         clearTerminal(1);
         System.out.println( loadFile("./yourPetDied.txt") );
 
+    }
+
+    public static String[] loadFlavor(String file) {
+        return loadFile(file).split("\n");
     }
     
     
@@ -141,7 +153,7 @@ public class Terminotchi{
                 break;
             case "feed":
                 pet.feed();
-                System.out.println(loadRandomFile("./ASCII/food/", 7));
+                System.out.println(loadRandomFile("./ASCII/food/", 13));
                 if(pet.isBoiii()) {
                     System.out.println("you feed your boiii");
                 } else {
@@ -150,17 +162,16 @@ public class Terminotchi{
                 break;
             case "play":
                 pet.play();
+                System.out.println("\n\n\n\n\n" + loadRandomFile("./ASCII/happiness/", 5) + "\n\n\n");
                 if(pet.isBoiii()) {
                     System.out.println("you played with your boiii");
                 } else {
                     System.out.println("you played with your pet");
                 }
-                
-                
                 break;
             case "clean":
                 pet.clean();
-                System.out.println("\n\n\n\n\n" + loadFile("./ASCII/soap.txt") + "\n\n\n");
+                System.out.println("\n\n\n\n\n" + loadRandomFile("./ASCII/clean/", 4) + "\n\n\n");
                 if(pet.isBoiii()) {
                     System.out.println("you cleaned your boiii");
                 } else {
@@ -185,13 +196,9 @@ public class Terminotchi{
                 } else {
                     System.out.println("Please enter a valid option");
                 }
-                
                 break;
         }
     }
-
-
-
 
     public static void printObject(String file){
         String loadedFile = loadFile(file);
@@ -199,18 +206,34 @@ public class Terminotchi{
     }
 
     public static void sickness(){
-        medAsked = true;
-        System.out.println("Oh no! Your creature is sick!");
-        System.out.println("Would you like to give it medicine? (y/n)");
-        String userInput = System.console().readLine();
-        if(userInput.equals("y")){
-            System.out.println(loadRandomFile("./ASCII/meds/", 5));
-            System.out.println("You gave your creature medicine. It looks like its doing much better!");
-            pet.setSick(false);
-            return;
+        if (medAsked) {
+            int death = rand.nextInt(100);
+            if(death > 50) {
+                pet.getHunger().set(-1);
+                return;
+            }
+            System.out.println("Your pet is still sick");
+            System.out.println("Are you sure you don't want to give him medicine? (y/n)");
+        } else {
+            medAsked = true;
+            System.out.println("Oh no! Your creature is sick!");
+            System.out.println("Would you like to give it medicine? (y/n)");
         }
-        else{
-            System.out.println("You decided not to give your creature medicine.");
+        while(true) {
+            String userInput = System.console().readLine();
+            if(userInput.equals("y")){
+                System.out.println(loadRandomFile("./ASCII/meds/", 5));
+                System.out.println("You gave your creature medicine. It looks like its doing much better!");
+                pet.setSick(false);
+                medAsked = false;
+                return;
+            }
+            else if (userInput.equals("n")) {
+                System.out.println("You decided not to give your creature medicine.");
+                return;
+            } else {
+                System.out.println("Error: invalid input");
+            }
         }
     }
 
@@ -221,18 +244,6 @@ public class Terminotchi{
             if (pet.getDirtyBoi().get() < 100 && n < 5) {
                 pet.setSick(true);
             }
-            // if (pet.getDirtyBoi().get() > 90 && n <= 1) {
-            //     pet.setSick(true);
-            // } else if (pet.getDirtyBoi().get() > 75 && n <= 1) {
-            //     pet.setSick(true);
-            // } else if (pet.getDirtyBoi().get() > 50 && n <= 1) {
-            //     pet.setSick(true);
-            // } else if (pet.getDirtyBoi().get() > 25 && n <= 2) {
-            //     pet.setSick(true);
-            // } else if (pet.getDirtyBoi().get() > 0 && n <= 4) {
-            //     pet.setSick(true);
-            // }
         }
     }
-
 }

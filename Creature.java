@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Creature {
     private static Meter happiness = new Meter();
     private static Meter dirtyBoi = new Meter();
@@ -8,6 +10,9 @@ public class Creature {
     private static boolean isAlive;
     private static boolean isSick;
     private static boolean boiii = false;
+    private static Random rand = new Random();
+    private static int n = rand.nextInt(6);
+    private static String dir = "./ASCII/stages/"+ Integer.toString(n) + "/";
     
     /* Constructor
      *
@@ -54,7 +59,7 @@ public class Creature {
             stage += 1;
             Terminotchi.clearTerminal(0);
             System.out.println( Terminotchi.loadFile("./ASCII/stageMessages/" + Integer.toString(stage) + ".txt") );
-            setArt("./ASCII/stages/" + Integer.toString(stage) + ".txt");
+            setArt(dir  + Integer.toString(stage) + ".txt");
         } else {
             hunger.set(-1);
         }
