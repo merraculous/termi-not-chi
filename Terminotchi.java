@@ -17,7 +17,7 @@ public class Terminotchi{
         
         int numSeconds = 0;
         int promptSeconds = 0;
-
+        boolean newStage = false;
         // To make the egg hatch immediately
         int numMinutes = 9000;
         clearTerminal(2);
@@ -27,16 +27,18 @@ public class Terminotchi{
         String[] genFlav = loadFlavor("./boiGeneral.txt");
         
         while(pet.isAlive()) {
-            
-            printScreen(3);
-
+            if(newStage) {
+                printScreen(5);
+            } else {
+                printScreen(3);
+            }
             numSeconds += 2;
             promptSeconds += 2;
 
             // Update stage if it's been 15 minutes
             if (numMinutes > 2) {
                 pet.loadNextStage();
-
+                newStage = true;
                 numMinutes = 0;
             } else if(pet.isSick() && !medAsked){
                 sickness();
@@ -113,14 +115,20 @@ public class Terminotchi{
         String hungryBoi = getMeterASCII(pet.getHunger());
         String happyBoi = getMeterASCII(pet.getHappiness());
         String hygene = getMeterASCII(pet.getDirtyBoi());
-        String text = "\n    HUNGER " + hungryBoi.replace("\n", " ") + hungy + "%     HAPPINESS " + happyBoi.replace("\n", " ") + happ + "%     DIRTY BOI " + hygene.replace("\n", " ") +" " + db + "%\n\n";
+        String text = "";
+        if(pet.getStage() > 1) {
+            text = "\n    HUNGER " + hungryBoi.replace("\n", " ") + hungy + "%     HAPPINESS " + happyBoi.replace("\n", " ") + happ + "%     DIRTY BOI " + hygene.replace("\n", " ") +" " + db + "%\n\n";
+        } else {
+            text = "\n    HUNGER " + hungryBoi.replace("\n", " ") + hungy + "%     HAPPINESS " + happyBoi.replace("\n", " ") + happ + "%     CLEANLINESS " + hygene.replace("\n", " ") +" " + db + "%\n\n";
+
+        }
         System.out.println(text);
     }
 
     public static String getMeterASCII(Meter m) {
         int percent = m.get();
         percent = (percent/10) * 10;
-        String file = "./ASCII/gauges/" + Integer.toString(percent) + ".txt";
+        String file = "./ASCII/gauges/" + Integer.toString(percent + 10) + ".txt";
         return loadFile(file);
     }
 
@@ -153,7 +161,7 @@ public class Terminotchi{
                 break;
             case "feed":
                 pet.feed();
-                System.out.println(loadRandomFile("./ASCII/food/", 13));
+                System.out.println(loadRandomFile("./ASCII/food/", 14));
                 if(pet.isBoiii()) {
                     System.out.println("you feed your boiii");
                 } else {
@@ -241,7 +249,7 @@ public class Terminotchi{
         if(!pet.isSick()){
             int n = rand.nextInt(100);
             // System.out.println(n);
-            if (pet.getDirtyBoi().get() < 100 && n < 5) {
+            if (pet.getDirtyBoi().get() < 90 && n < 2) {
                 pet.setSick(true);
             }
         }
