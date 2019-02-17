@@ -41,6 +41,9 @@ public class Terminotchi{
         }
         clearTerminal(1);
         System.out.println( loadFile("./yourPetDied.txt") );
+
+        printScreen();
+        readInput();
     }
     
     public static void clearTerminal(int sleepTime) {
@@ -101,4 +104,33 @@ public class Terminotchi{
         }
         return fileContent.toString();
     }
+
+    public static void readInput(){
+        System.out.println("Please choose an action: feed, play, clean");
+        String input = System.console().readLine();
+        switch(input.toLowerCase()){
+            case "feed":
+                //Call feed function
+                System.out.println("you fed your pet");
+                break;
+            case "play":
+                //Call play function
+                System.out.println("you played with your pet");
+                break;
+            case "clean":
+                //Call clean function
+                System.out.println("you cleaned your pet");
+                break;
+            case "quit":
+                System.out.println("byee");
+                break;
+            default:
+                System.out.println("Please enter a valid option");
+                break;
+        }
+        
+        
+
+    }
+
 }
